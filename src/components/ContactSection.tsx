@@ -1,11 +1,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import emailjs from "@emailjs/browser";
 import TerminalWindow from "./TerminalWindow";
 
-const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+const API_URL = "https://api.ohajjo.online/contact";
 
 type FormState = "idle" | "sending" | "success" | "error";
 
@@ -18,7 +15,9 @@ const ContactSection = () => {
   });
   const [status, setStatus] = useState<FormState>("idle");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+      e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
@@ -29,18 +28,20 @@ const ContactSection = () => {
     setStatus("sending");
 
     try {
-      await emailjs.send(
-          SERVICE_ID,
-          TEMPLATE_ID,
-          {
-            from_name: form.from_name,
-            from_email: form.from_email,
-            subject: form.subject || "(no subject)",
-            message: form.message,
-            to_email: "contact@ohajjo.online",
-          },
-          PUBLIC_KEY
-      );
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          from_name: form.from_name,
+          from_email: form.from_email,
+          subject: form.subject || "(no subject)",
+          message: form.message,
+          to_email: "contact@ohajjo.online",
+        }),
+      });
+
+      if (!res.ok) throw new Error("Failed to send");
+
       setStatus("success");
       setForm({ from_name: "", from_email: "", subject: "", message: "" });
     } catch {
@@ -67,8 +68,12 @@ const ContactSection = () => {
               viewport={{ once: true }}
               className="mb-8 text-center"
           >
-            <p className="text-xs text-muted-foreground mb-1">// ready to collaborate?</p>
-            <h2 className="text-3xl md:text-4xl font-bold glow-green">{"<Contact />"}</h2>
+            <p className="text-xs text-muted-foreground mb-1">
+              // ready to collaborate?
+            </p>
+            <h2 className="text-3xl md:text-4xl font-bold glow-green">
+              {"<Contact />"}
+            </h2>
           </motion.div>
 
           {/* Contact info */}
@@ -82,13 +87,42 @@ const ContactSection = () => {
             <TerminalWindow title="api/contact — GET">
             <pre className="text-sm leading-relaxed">
               <span className="text-terminal-magenta">{"{"}</span>{"\n"}
-              {"  "}<span className="text-terminal-cyan">"status"</span><span className="text-muted-foreground">:</span> <span className="text-terminal-green">"available for hire"</span><span className="text-muted-foreground">,</span>{"\n"}
-              {"  "}<span className="text-terminal-cyan">"email"</span><span className="text-muted-foreground">:</span>{" "}
-              <a href="mailto:contact@ohajjo.online" className="text-terminal-green hover:underline">"contact@ohajjo.online"</a><span className="text-muted-foreground">,</span>{"\n"}
-              {"  "}<span className="text-terminal-cyan">"phone"</span><span className="text-muted-foreground">:</span>{" "}
-              <a href="tel:+33751570457" className="text-terminal-green hover:underline">"+33 7 51 57 04 57"</a><span className="text-muted-foreground">,</span>{"\n"}
-              {"  "}<span className="text-terminal-cyan">"location"</span><span className="text-muted-foreground">:</span> <span className="text-terminal-amber">"Saint-Avé, Vannes — France 🇫🇷"</span><span className="text-muted-foreground">,</span>{"\n"}
-              {"  "}<span className="text-terminal-cyan">"response_time"</span><span className="text-muted-foreground">:</span> <span className="text-terminal-amber">"&lt; 24h"</span>{"\n"}
+              {"  "}
+              <span className="text-terminal-cyan">"status"</span>
+              <span className="text-muted-foreground">:</span>{" "}
+              <span className="text-terminal-green">"available for hire"</span>
+              <span className="text-muted-foreground">,</span>{"\n"}
+              {"  "}
+              <span className="text-terminal-cyan">"email"</span>
+              <span className="text-muted-foreground">:</span>{" "}
+              <a
+                  href="mailto:contact@ohajjo.online"
+                  className="text-terminal-green hover:underline"
+              >
+                "contact@ohajjo.online"
+              </a>
+              <span className="text-muted-foreground">,</span>{"\n"}
+              {"  "}
+              <span className="text-terminal-cyan">"phone"</span>
+              <span className="text-muted-foreground">:</span>{" "}
+              <a
+                  href="tel:+33751570457"
+                  className="text-terminal-green hover:underline"
+              >
+                "+33 7 51 57 04 57"
+              </a>
+              <span className="text-muted-foreground">,</span>{"\n"}
+              {"  "}
+              <span className="text-terminal-cyan">"location"</span>
+              <span className="text-muted-foreground">:</span>{" "}
+              <span className="text-terminal-amber">
+                "Saint-Avé, Vannes — France 🇫🇷"
+              </span>
+              <span className="text-muted-foreground">,</span>{"\n"}
+              {"  "}
+              <span className="text-terminal-cyan">"response_time"</span>
+              <span className="text-muted-foreground">:</span>{" "}
+              <span className="text-terminal-amber">"&lt; 24h"</span>{"\n"}
               <span className="text-terminal-magenta">{"}"}</span>
             </pre>
             </TerminalWindow>
@@ -109,8 +143,12 @@ const ContactSection = () => {
                       className="py-8 text-center space-y-3"
                   >
                     <p className="text-4xl text-terminal-green">✓</p>
-                    <p className="font-mono text-sm text-terminal-green">Message sent successfully!</p>
-                    <p className="text-muted-foreground text-xs">// I'll get back to you within 24h</p>
+                    <p className="font-mono text-sm text-terminal-green">
+                      Message sent successfully!
+                    </p>
+                    <p className="text-muted-foreground text-xs">
+                      // I'll get back to you within 24h
+                    </p>
                     <button
                         onClick={() => setStatus("idle")}
                         className="mt-2 text-[11px] text-terminal-cyan hover:text-primary transition-colors"
@@ -120,7 +158,6 @@ const ContactSection = () => {
                   </motion.div>
               ) : (
                   <form onSubmit={handleSubmit} className="space-y-5">
-
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                       {/* Name */}
                       <div className="space-y-2">
@@ -188,7 +225,8 @@ const ContactSection = () => {
 
                     {status === "error" && (
                         <p className="text-terminal-red text-xs font-mono">
-                          ✗ Failed to send. Please try emailing directly at contact@ohajjo.online
+                          ✗ Failed to send. Please try emailing directly at
+                          contact@ohajjo.online
                         </p>
                     )}
 
@@ -207,7 +245,8 @@ const ContactSection = () => {
                             </>
                         ) : (
                             <>
-                              <span className="text-terminal-dim">$</span> send --message
+                              <span className="text-terminal-dim">$</span> send
+                              --message
                             </>
                         )}
                       </button>
@@ -224,7 +263,9 @@ const ContactSection = () => {
               transition={{ delay: 0.5 }}
               className="text-center mt-12 text-muted-foreground text-xs"
           >
-            <span className="text-terminal-dim">/*</span> © {new Date().getFullYear()} Obidah Hajjo — Built with React + TypeScript <span className="text-terminal-dim">*/</span>
+            <span className="text-terminal-dim">/*</span> ©{" "}
+            {new Date().getFullYear()} Obidah Hajjo — Built with React + TypeScript{" "}
+            <span className="text-terminal-dim">*/</span>
           </motion.p>
         </div>
       </section>
