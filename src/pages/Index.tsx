@@ -9,19 +9,19 @@ import ConsoleSection from "@/components/ConsoleSection";
 import ContactSection from "@/components/ContactSection";
 
 const Index = () => {
-  return (
-    <div className="min-h-screen bg-background scanline">
-      <MatrixRain />
-      <Navbar />
-      <HeroSection />
-      <SkillsSection />
-      <ProjectsSection />
-      <ExperienceSection />
-      <EducationSection />
-      <ConsoleSection />
-      <ContactSection />
-    </div>
-  );
+    return (
+        <div className="min-h-screen bg-background scanline">
+            <MatrixRain/>
+            <Navbar/>
+            <HeroSection/>
+            <ConsoleSection/>
+            <SkillsSection/>
+            <ProjectsSection/>
+            <ExperienceSection/>
+            <EducationSection/>
+            <ContactSection/>
+        </div>
+    );
 };
 
 export default Index;
