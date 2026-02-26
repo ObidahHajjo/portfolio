@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import TerminalWindow from "./TerminalWindow";
 
-const API_URL = "https://api.ohajjo.online/contact";
+const API_URL = "https://contact.ohajjo.online/";
 
 type FormState = "idle" | "sending" | "success" | "error";
 
