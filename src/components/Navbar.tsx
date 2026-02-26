@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 
 const links = [
   { label: "skills", href: "#skills" },
+  { label: "projects", href: "#projects" },
   { label: "experience", href: "#experience" },
-  { label: "education", href: "#education" },
+  { label: "console", href: "#console" },
   { label: "contact", href: "#contact" },
 ];
 
