@@ -32,11 +32,10 @@ const ContactSection = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: form.from_name,
-          email: form.from_email,
-          subject: form.subject || "(no subject)",
-          message: form.message,
-          to_email: "contact@ohajjo.online",
+          name: "John Doe",
+          email: "john@example.com",
+          subject: "Hello",
+          message: "This is a test message",
         }),
       });
 
