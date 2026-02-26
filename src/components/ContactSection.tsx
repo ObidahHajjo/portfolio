@@ -1,47 +1,50 @@
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin } from "lucide-react";
+import TerminalWindow from "./TerminalWindow";
 
 const ContactSection = () => {
   return (
-    <section id="contact" className="section-padding bg-card/50">
-      <div className="max-w-3xl mx-auto text-center">
+    <section id="contact" className="section-padding relative z-10">
+      <div className="max-w-2xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          className="mb-8 text-center"
         >
-          <h2 className="font-mono text-primary text-sm mb-2 tracking-wider">// contact</h2>
-          <h3 className="text-3xl md:text-4xl font-bold mb-6">Travaillons ensemble</h3>
-          <p className="text-muted-foreground text-lg mb-10">
-            Disponible pour des opportunités de développement. N'hésitez pas à me contacter !
-          </p>
+          <p className="text-xs text-muted-foreground mb-1">// ready to collaborate?</p>
+          <h2 className="text-3xl md:text-4xl font-bold glow-green">{"<Contact />"}</h2>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="flex flex-col sm:flex-row justify-center gap-6"
+          transition={{ delay: 0.2 }}
         >
-          <a href="mailto:hajjoobidah@gmail.com" className="flex items-center gap-3 bg-card border border-border rounded-xl px-6 py-4 hover:border-primary/50 transition-colors group">
-            <Mail className="w-5 h-5 text-primary" />
-            <span className="text-sm text-secondary-foreground group-hover:text-foreground transition-colors">hajjoobidah@gmail.com</span>
-          </a>
-          <a href="tel:+33661559552" className="flex items-center gap-3 bg-card border border-border rounded-xl px-6 py-4 hover:border-primary/50 transition-colors group">
-            <Phone className="w-5 h-5 text-primary" />
-            <span className="text-sm text-secondary-foreground group-hover:text-foreground transition-colors">06 61 55 95 52</span>
-          </a>
-          <div className="flex items-center gap-3 bg-card border border-border rounded-xl px-6 py-4">
-            <MapPin className="w-5 h-5 text-primary" />
-            <span className="text-sm text-secondary-foreground">Saint-Avé, France</span>
-          </div>
+          <TerminalWindow title="api/contact — GET">
+            <pre className="text-sm leading-relaxed">
+              <span className="text-terminal-magenta">{"{"}</span>{"\n"}
+              {"  "}<span className="text-terminal-cyan">"status"</span><span className="text-muted-foreground">:</span> <span className="text-terminal-green">"available for hire"</span><span className="text-muted-foreground">,</span>{"\n"}
+              {"  "}<span className="text-terminal-cyan">"email"</span><span className="text-muted-foreground">:</span>{" "}
+              <a href="mailto:hajjoobidah@gmail.com" className="text-terminal-green hover:underline">"hajjoobidah@gmail.com"</a><span className="text-muted-foreground">,</span>{"\n"}
+              {"  "}<span className="text-terminal-cyan">"phone"</span><span className="text-muted-foreground">:</span>{" "}
+              <a href="tel:+33661559552" className="text-terminal-green hover:underline">"06 61 55 95 52"</a><span className="text-muted-foreground">,</span>{"\n"}
+              {"  "}<span className="text-terminal-cyan">"location"</span><span className="text-muted-foreground">:</span> <span className="text-terminal-amber">"2 Rue Louise Weiss, 56890 Saint-Avé"</span><span className="text-muted-foreground">,</span>{"\n"}
+              {"  "}<span className="text-terminal-cyan">"response_time"</span><span className="text-muted-foreground">:</span> <span className="text-terminal-amber">"&lt; 24h"</span>{"\n"}
+              <span className="text-terminal-magenta">{"}"}</span>
+            </pre>
+          </TerminalWindow>
         </motion.div>
 
-        <p className="mt-16 text-muted-foreground text-xs font-mono">
-          © {new Date().getFullYear()} Obidah Hajjo — Tous droits réservés
-        </p>
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5 }}
+          className="text-center mt-12 text-muted-foreground text-xs"
+        >
+          <span className="text-terminal-dim">/*</span> © {new Date().getFullYear()} Obidah Hajjo — Built with React + TypeScript <span className="text-terminal-dim">*/</span>
+        </motion.p>
       </div>
     </section>
   );

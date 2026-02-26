@@ -8,14 +8,11 @@ export default {
     container: {
       center: true,
       padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
+      screens: { "2xl": "1400px" },
     },
     extend: {
       fontFamily: {
-        sans: ["Space Grotesk", "system-ui", "sans-serif"],
-        mono: ["JetBrains Mono", "monospace"],
+        mono: ["JetBrains Mono", "Fira Code", "monospace"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -50,6 +47,15 @@ export default {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
+        },
+        terminal: {
+          green: "hsl(var(--terminal-green))",
+          cyan: "hsl(var(--terminal-cyan))",
+          amber: "hsl(var(--terminal-amber))",
+          magenta: "hsl(var(--terminal-magenta))",
+          red: "hsl(var(--terminal-red))",
+          blue: "hsl(var(--terminal-blue))",
+          dim: "hsl(var(--terminal-dim))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",

@@ -1,78 +1,90 @@
 import { motion } from "framer-motion";
 
-const experiences = [
+const commits = [
   {
-    title: "Technicien informatique — Stage",
-    company: "Tersys",
-    location: "Vannes, France",
+    hash: "a3f7e21",
     date: "2024",
-    points: [
-      "Conception et développement d'une application web de gestion de chantier.",
-      "Analyse des besoins et définition des fonctionnalités avec l'équipe technique.",
-      "Développement backend avec Laravel (architecture MVC, gestion des données).",
-      "Développement frontend avec React pour une interface dynamique et ergonomique.",
+    branch: "main",
+    title: "feat: Application web de gestion de chantier",
+    company: "Tersys — Vannes",
+    files: [
+      "+ Backend Laravel (MVC, gestion des données, logique métier)",
+      "+ Frontend React (interface dynamique et ergonomique)",
+      "+ Analyse des besoins avec l'équipe technique",
+      "+ Suivi opérationnel des projets de chantier",
     ],
   },
   {
-    title: "Technicien informatique — Stage",
-    company: "ECOMS Informatique",
-    location: "Vannes, France",
-    date: "Mai – Juin 2021",
-    points: [
-      "Surveillance et amélioration de la communication réseau.",
-      "Installation de la fibre optique.",
+    hash: "b8c4d12",
+    date: "Mai–Juin 2021",
+    branch: "internship",
+    title: "feat: Infrastructure réseau & fibre optique",
+    company: "ECOMS Informatique — Vannes",
+    files: [
+      "+ Surveillance et amélioration de la communication réseau",
+      "+ Installation de la fibre optique",
     ],
   },
   {
-    title: "Expériences complémentaires",
-    company: "Intérim & stages",
-    location: "France",
-    date: "2019 – 2024",
-    points: [
-      "Missions dans les domaines de l'électricité et des services.",
-      "Développement de rigueur, autonomie et sens des responsabilités.",
+    hash: "c1d9e56",
+    date: "2019–2024",
+    branch: "develop",
+    title: "chore: Expériences complémentaires",
+    company: "Intérim & stages — France",
+    files: [
+      "+ Missions en électricité et services",
+      "+ Développement de rigueur et autonomie",
     ],
   },
 ];
 
 const ExperienceSection = () => {
   return (
-    <section id="experience" className="section-padding bg-card/50">
-      <div className="max-w-6xl mx-auto">
+    <section id="experience" className="section-padding relative z-10">
+      <div className="max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          className="mb-12"
         >
-          <h2 className="font-mono text-primary text-sm mb-2 tracking-wider">// expérience</h2>
-          <h3 className="text-3xl md:text-4xl font-bold mb-12">Parcours Professionnel</h3>
+          <p className="text-xs text-muted-foreground mb-1">$ git log --oneline --graph</p>
+          <h2 className="text-3xl md:text-4xl font-bold glow-green">Parcours</h2>
         </motion.div>
 
-        <div className="space-y-8">
-          {experiences.map((exp, i) => (
+        <div className="space-y-6">
+          {commits.map((commit, i) => (
             <motion.div
-              key={i}
-              initial={{ opacity: 0, x: -20 }}
+              key={commit.hash}
+              initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="relative pl-8 border-l-2 border-border hover:border-primary transition-colors group"
+              transition={{ delay: i * 0.15, duration: 0.5 }}
+              className="relative pl-6 border-l border-terminal-dim"
             >
-              <div className="absolute left-[-7px] top-2 w-3 h-3 rounded-full bg-border group-hover:bg-primary transition-colors" />
-              <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 mb-2">
-                <h4 className="text-xl font-semibold">{exp.title}</h4>
-                <span className="font-mono text-primary text-sm">{exp.company}</span>
+              {/* Git graph node */}
+              <div className="absolute left-[-5px] top-3 w-[9px] h-[9px] rounded-full bg-primary glow-box" />
+
+              <div className="terminal-window">
+                <div className="terminal-header">
+                  <div className="terminal-dot bg-terminal-red" />
+                  <div className="terminal-dot bg-terminal-amber" />
+                  <div className="terminal-dot bg-terminal-green" />
+                  <span className="text-xs text-muted-foreground ml-2">
+                    commit {commit.hash} <span className="text-terminal-cyan">({commit.branch})</span>
+                  </span>
+                  <span className="text-xs text-muted-foreground ml-auto">{commit.date}</span>
+                </div>
+                <div className="p-4 md:p-5">
+                  <p className="text-terminal-amber text-sm font-semibold mb-1">{commit.title}</p>
+                  <p className="text-muted-foreground text-xs mb-3">{commit.company}</p>
+                  <div className="space-y-1 font-mono text-xs">
+                    {commit.files.map((file, j) => (
+                      <p key={j} className="text-terminal-green">{file}</p>
+                    ))}
+                  </div>
+                </div>
               </div>
-              <p className="text-muted-foreground text-sm mb-3">{exp.location} · {exp.date}</p>
-              <ul className="space-y-1.5">
-                {exp.points.map((point, j) => (
-                  <li key={j} className="text-secondary-foreground text-sm flex gap-2">
-                    <span className="text-primary mt-1 shrink-0">▹</span>
-                    {point}
-                  </li>
-                ))}
-              </ul>
             </motion.div>
           ))}
         </div>

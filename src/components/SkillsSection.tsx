@@ -1,73 +1,121 @@
 import { motion } from "framer-motion";
+import TerminalWindow from "./TerminalWindow";
 
-const skillGroups = [
-  {
-    title: "Langages",
-    items: ["PHP", "Java", "Python", "HTML", "CSS", "JavaScript", "SQL", "C++", "Dart"],
-  },
-  {
-    title: "Frameworks & Bibliothèques",
-    items: ["React", "Laravel", "Flutter", "Spring Boot", "Next.js"],
-  },
-  {
-    title: "Outils",
-    items: ["Docker", "Postman", "Git"],
-  },
-  {
-    title: "Langues",
-    items: ["Français", "Anglais", "Arabe"],
-  },
-];
-
-const container = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.1 } },
+const skills = {
+  languages: [
+    { name: "JavaScript", level: 90 },
+    { name: "PHP", level: 85 },
+    { name: "Python", level: 75 },
+    { name: "Java", level: 80 },
+    { name: "SQL", level: 85 },
+    { name: "Dart", level: 65 },
+    { name: "C++", level: 60 },
+    { name: "HTML/CSS", level: 95 },
+  ],
+  frameworks: [
+    { name: "React", level: 90 },
+    { name: "Laravel", level: 85 },
+    { name: "Next.js", level: 75 },
+    { name: "Spring Boot", level: 70 },
+    { name: "Flutter", level: 65 },
+  ],
+  tools: [
+    { name: "Git", level: 90 },
+    { name: "Docker", level: 75 },
+    { name: "Postman", level: 85 },
+  ],
 };
 
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
-};
+const SkillBar = ({ name, level, delay }: { name: string; level: number; delay: number }) => (
+  <motion.div
+    initial={{ opacity: 0, x: -20 }}
+    whileInView={{ opacity: 1, x: 0 }}
+    viewport={{ once: true }}
+    transition={{ delay, duration: 0.4 }}
+    className="group"
+  >
+    <div className="flex justify-between text-xs mb-1">
+      <span className="text-foreground">{name}</span>
+      <span className="text-muted-foreground">{level}%</span>
+    </div>
+    <div className="h-2 bg-secondary rounded-sm overflow-hidden">
+      <motion.div
+        initial={{ width: 0 }}
+        whileInView={{ width: `${level}%` }}
+        viewport={{ once: true }}
+        transition={{ delay: delay + 0.2, duration: 0.8, ease: "easeOut" }}
+        className="h-full rounded-sm"
+        style={{
+          background: `linear-gradient(90deg, hsl(var(--terminal-green)), hsl(var(--terminal-cyan)))`,
+          boxShadow: `0 0 8px hsl(var(--terminal-green) / 0.5)`,
+        }}
+      />
+    </div>
+  </motion.div>
+);
 
 const SkillsSection = () => {
   return (
-    <section id="skills" className="section-padding">
+    <section id="skills" className="section-padding relative z-10">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          className="mb-12"
         >
-          <h2 className="font-mono text-primary text-sm mb-2 tracking-wider">// compétences</h2>
-          <h3 className="text-3xl md:text-4xl font-bold mb-12">Technologies & Outils</h3>
+          <p className="text-primary text-xs mb-1">
+            <span className="text-terminal-magenta">const</span> skills <span className="text-muted-foreground">=</span> <span className="text-terminal-amber">{"{"}</span>
+          </p>
+          <h2 className="text-3xl md:text-4xl font-bold glow-green">
+            &nbsp;&nbsp;tech_stack
+          </h2>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {skillGroups.map((group) => (
-            <motion.div
-              key={group.title}
-              variants={container}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true }}
-              className="bg-card rounded-xl p-6 border border-border"
-            >
-              <h4 className="font-mono text-primary text-xs uppercase tracking-wider mb-4">{group.title}</h4>
+        <div className="grid md:grid-cols-3 gap-6">
+          <TerminalWindow title="languages.rs">
+            <div className="space-y-3">
+              {skills.languages.map((s, i) => (
+                <SkillBar key={s.name} {...s} delay={i * 0.05} />
+              ))}
+            </div>
+          </TerminalWindow>
+
+          <TerminalWindow title="frameworks.ts">
+            <div className="space-y-3">
+              {skills.frameworks.map((s, i) => (
+                <SkillBar key={s.name} {...s} delay={i * 0.05} />
+              ))}
+            </div>
+          </TerminalWindow>
+
+          <TerminalWindow title="tools.sh">
+            <div className="space-y-3">
+              {skills.tools.map((s, i) => (
+                <SkillBar key={s.name} {...s} delay={i * 0.05} />
+              ))}
+            </div>
+            <div className="mt-6 pt-4 border-t border-border">
+              <p className="text-xs text-muted-foreground mb-2">// langues</p>
               <div className="flex flex-wrap gap-2">
-                {group.items.map((skill) => (
-                  <motion.span
-                    key={skill}
-                    variants={item}
-                    className="bg-secondary text-secondary-foreground px-3 py-1.5 rounded-md text-sm font-medium"
-                  >
-                    {skill}
-                  </motion.span>
+                {["Français 🇫🇷", "Anglais 🇬🇧", "Arabe 🇸🇦"].map((lang) => (
+                  <span key={lang} className="text-xs border border-border px-2 py-1 rounded text-secondary-foreground">
+                    {lang}
+                  </span>
                 ))}
               </div>
-            </motion.div>
-          ))}
+            </div>
+          </TerminalWindow>
         </div>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="text-terminal-amber text-xs mt-4"
+        >
+          <span className="text-terminal-amber">{"}"}</span><span className="text-muted-foreground">;</span>
+        </motion.p>
       </div>
     </section>
   );
