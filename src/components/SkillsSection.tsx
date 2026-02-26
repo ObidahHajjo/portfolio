@@ -3,26 +3,27 @@ import TerminalWindow from "./TerminalWindow";
 
 const skills = {
   languages: [
-    { name: "JavaScript", level: 90 },
+    { name: "JavaScript", level: 75 },
     { name: "PHP", level: 85 },
-    { name: "Python", level: 75 },
+    { name: "Python", level: 50 },
     { name: "Java", level: 80 },
-    { name: "SQL", level: 85 },
-    { name: "Dart", level: 65 },
-    { name: "C++", level: 60 },
-    { name: "HTML/CSS", level: 95 },
+    { name: "SQL", level: 80 },
+    { name: "Postgres", level: 75 },
+    { name: "Dart", level: 40 },
+    { name: "C++", level: 40 },
+    { name: "HTML/CSS", level: 90 },
   ],
   frameworks: [
-    { name: "React", level: 90 },
-    { name: "Laravel", level: 85 },
+    { name: "React", level: 75 },
+    { name: "Laravel", level: 90 },
     { name: "Next.js", level: 75 },
-    { name: "Spring Boot", level: 70 },
-    { name: "Flutter", level: 65 },
+    { name: "Spring Boot", level: 65 },
+    { name: "Flutter", level: 40 },
   ],
   tools: [
     { name: "Git", level: 90 },
-    { name: "Docker", level: 75 },
-    { name: "Postman", level: 85 },
+    { name: "Docker", level: 80 },
+    { name: "Postman", level: 90 },
   ],
 };
 
