@@ -263,7 +263,7 @@ const ContactSection = () => {
               className="text-center mt-12 text-muted-foreground text-xs"
           >
             <span className="text-terminal-dim">/*</span> ©{" "}
-            {new Date().getFullYear()} Obidah Hajjo — Built with React + TypeScript{" "}
+            {new Date().getFullYear()} Obidah Hajjo
             <span className="text-terminal-dim">*/</span>
           </motion.p>
         </div>
