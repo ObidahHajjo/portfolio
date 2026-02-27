@@ -55,7 +55,7 @@ const HeroSection = () => {
               transition={{ delay: 1.5, duration: 0.6 }}
               className="mt-8 flex gap-4 flex-wrap"
           >
-            <a href="mailto:hajjoobidah@gmail.com" className="inline-flex items-center gap-2 border border-primary bg-primary/10 text-primary px-5 py-2.5 rounded-md text-sm hover:bg-primary/20 transition-colors glow-box">
+            <a href="#contact" className="inline-flex items-center gap-2 border border-primary bg-primary/10 text-primary px-5 py-2.5 rounded-md text-sm hover:bg-primary/20 transition-colors glow-box">
               <span className="text-terminal-dim">[</span> contact@reach <span className="text-terminal-dim">]</span>
             </a>
             <a href="#skills" className="inline-flex items-center gap-2 border border-border text-muted-foreground px-5 py-2.5 rounded-md text-sm hover:text-foreground hover:border-primary/50 transition-colors">
